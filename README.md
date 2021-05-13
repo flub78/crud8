@@ -4,9 +4,9 @@ A CRUD using Laravel 8.x and PHP 8.
 
 ## Sources
 
-    https://appdividend.com/2020/10/13/laravel-8-crud-tutorial-example-step-by-step-from-scratch/
+[Laravel 8 CRUD tutorial](https://appdividend.com/2020/10/13/laravel-8-crud-tutorial-example-step-by-step-from-scratch/)
     
-    https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+[Markdown cheat sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 
 ## Steps
 
