@@ -106,6 +106,14 @@ test with empty fields
 
 ### Unit tests
 
+They are stored in the tests/Unit directory with an example. One class tests.
+
+### Feature tests
+
+Under tests/Feature. Tests of features impicatting the colaboration of several classes.
+
+Under Eclispe, for some reason the phpunit.xml configuration file is not referenced by default in the run configuration. It generates errors ... Tests pass when invoqued from CLI using the project local phpunit.
+
 ### Selenium like tests
 
 ## Documentation
