@@ -21,6 +21,4 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::resource('games', 'GameController');
-
 require __DIR__.'/auth.php';
