@@ -13,6 +13,7 @@ Trying the breeze starter kit
     php artisan breeze:install
 
     npm install
+
     npm run dev
 
     php artisan migrate    
