@@ -28,6 +28,7 @@ Replaced by Laravel UI installation
     npm install && npm run dev
     
     php artisan ui bootstrap --auth
+    npm install && npm run dev
     
     
     
