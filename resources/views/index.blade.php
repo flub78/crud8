@@ -41,5 +41,8 @@
         @endforeach
     </tbody>
   </table>
+  
+    <a href="{{url('games')}}/create"><button type="submit" class="btn btn-primary" >@lang('general.create') @lang('games.element')</button></a> 
+  
 <div>
 @endsection
