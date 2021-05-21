@@ -18,6 +18,7 @@ class Controller extends BaseController
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // Better to manage routes in the routes middleware directory
+        // $this->middleware('auth');
     }
 }

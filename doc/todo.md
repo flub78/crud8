@@ -6,7 +6,6 @@
     * Manage something else for user
 
 * application menu
-* button create new in the index view  
 * database backup and restore
 * basic calendar
 * datatable
@@ -25,3 +24,7 @@
 ## Maybe some day
 
 * multi tenant
+
+## Done
+
+* button create new in the index view  

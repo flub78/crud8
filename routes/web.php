@@ -17,8 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('games', 'GameController');
+Route::resource('games', 'GameController')->middleware('auth');
 
-Auth::routes();
+Auth::routes(['reset' => true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
