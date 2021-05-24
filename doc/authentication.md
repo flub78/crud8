@@ -29,7 +29,13 @@ Replaced by Laravel UI installation
     
     php artisan ui bootstrap --auth
     npm install && npm run dev
-    
-    
-    
+
+Warning: Include the auth middleware in the routew/web.php file, rather that in the controller class constructor.
+
+ 
+## Admin management
+
+The easiest way to manage admin users is to add a field in the model.
+
+## Roles management
     

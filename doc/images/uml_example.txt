@@ -1,0 +1,17 @@
+@startuml
+title Laravel MVC Architecture
+
+Controller <|-right- ClassController
+together {
+    View <|-- CreateView
+    View <|-- EditView
+    View <|-- ListView
+}
+Model <|-- ClassModel
+
+ClassController -up- ClassModel : uses
+ClassController -up- ListView : loads
+ClassController -up- CreateView : loads
+ClassController -up- EditView : loads
+
+@enduml

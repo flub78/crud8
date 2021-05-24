@@ -11,4 +11,15 @@ class Game extends Model
     use HasFactory;
     
     protected $fillable = ['name', 'price'];
+    
+    /**
+     * Checks equality
+     * @param Game $x
+     * @return boolean
+     */
+    public function equals(Game $x) {
+        return
+            ($this->name == $x->name) &&
+            ($this->price == $x->price);            
+    }
 }
