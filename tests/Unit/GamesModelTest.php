@@ -3,7 +3,6 @@
 namespace Tests\Unit;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 use App\Models\Game;
 
@@ -18,13 +17,13 @@ class GamesModelTest extends TestCase
      * Given the database server is on
      * Given the schema exists in database
      * When creating an element
-     * Then it is stored in database
+     * Then it is stored in database, it can be read, updated and deleted
      */
     public function testCRUD () {
         
         $initial_count = Game::count();
         
-        // Create and save an element
+        // Create
         $game = Game::factory()->make();        
         $game->save();
         
@@ -32,15 +31,15 @@ class GamesModelTest extends TestCase
         Game::factory()->make()->save();
         
         $count = Game::count();
-        $this->assertTrue($count == $initial_count + 2, "Two more elements in the table");
+        $this->assertTrue($count == $initial_count + 2, "Two new elements in the table");
         $this->assertDatabaseCount('games',  $initial_count + 2);
                 
-        # Fetch an object back from database
+        # Read
         $stored = Game::where('name', $game->name)->first();
         
         $this->assertTrue($game->equals($stored), "Checks the element fetched from the database");
         
-        // Check update
+        // Update
         $new_name = "updated game";
         $new_price = 12;
         $stored->name = $new_name;
@@ -54,7 +53,7 @@ class GamesModelTest extends TestCase
             'name' => $new_name,
         ]);
         
-        // delete
+        // Delete
         $stored->delete();   
         $this->assertDeleted($stored);
         $count = Game::count();
