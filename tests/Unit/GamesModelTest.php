@@ -11,12 +11,8 @@ class GamesModelTest extends TestCase
 {
     
     // Clean up the database
-    // not sure that the easiest way is to start from an empty model
-    // Maybe that a well known state owuld be more convenient
-    // Note that it also happen for continuous upgraded software to have issue only with an empty database
     use RefreshDatabase;
-    
-    
+        
     /**
      * Test element creation, read, update and delete
      * Given the database server is on
