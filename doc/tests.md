@@ -18,6 +18,12 @@ Tests need to be develop at the same pace than the code. It is usualy a huge eff
   * mostly black box testing
   * For WEB application us a controlled WEB browser
   * May require the control of all of the system interfaces
+  
+* Performance tests
+
+* Endurance tests
+
+* Deployment tests
 
 
 ## Current features

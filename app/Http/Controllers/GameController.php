@@ -38,9 +38,7 @@ class GameController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        Log::debug('GameController.store');
-        
+    {        
         // TODO: handle price decimal values with comma (French localisation)
         // Curently price is an integer value ...
         $validatedData = $request->validate([
@@ -83,9 +81,7 @@ class GameController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        Log::debug('GameController.update');
-        
+    {        
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'price' => 'required'
@@ -102,9 +98,7 @@ class GameController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        Log::debug('GameController.destroy');
-        
+    {     
         $game = Game::findOrFail($id);
         $game->delete();
         
