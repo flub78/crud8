@@ -1,102 +1,82 @@
 <?php
 
-namespace Tests\Feature;
+namespace tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Game;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class GameControllerTest extends TestCase
-{
-    
-    protected $basename = "games";	
+class GameControllerTest extends TestCase {
+	
+	protected $basename = "games";
+	
+	
+	// Clean up the database
+	use RefreshDatabase;
+	
+	function __construct() {
+		parent::__construct ();
 
-    function __construct() {
-        parent::__construct();
-        
-        // required to be able to use the factory inside the constructor
-        $this->createApplication();
-        // $this->user = factory(User::class)->create();
-        $this->user = User::factory()->make();
-    }
-    
-    function __destruct() {
-        $this->user->delete();
-    }
-    
-    /**
-     *
-     * @param string $segments
-     * @return string
-     */
-    protected function base_url($segments = "") {
-        $url = "/" . $this->basename;
-        if ($segments) {
-            $url = join("/", [$url, $segments]);
-        }
-        return $url;
-    }
-    
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function test_root()
-    {
-        $response = $this->get('/');
-        $response->assertStatus(200);
-    }
-    
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function test_login()
-    {
-        $response = $this->get('/login');
-        $response->assertStatus(200);      
-    }
-    
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function test_home()
-    {
-        $this->be($this->user);
-        $response = $this->get('/home');
-        $response->assertStatus(200);
-        $response->assertSeeText('You are logged in!');
-    }
-    
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function test_games_index()
-    {
-        $this->be($this->user);
-        $response = $this->get('/games');
-        $response->assertStatus(200);
-        $response->assertSeeText('Game Name');
-        $response->assertSeeText('Action');
-    }
-    
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function test_games_create()
-    {
-        $this->be($this->user);
-        $response = $this->get('/games/create');
-        $response->assertStatus(200);
-        $response->assertSeeText('Add Games Data');
-    }
+		// required to be able to use the factory inside the constructor
+		$this->createApplication ();
+		// $this->user = factory(User::class)->create();
+		$this->user = User::factory ()->make ();
+	}
+
+	function __destruct() {
+		$this->user->delete ();
+	}
+
+	/**
+	 * Index view
+	 *
+	 * @return void
+	 */
+	public function test_games_index() {
+		$this->be ( $this->user );
+		$response = $this->get ( '/games' );
+		$response->assertStatus ( 200 );
+		$response->assertSeeText ( 'Game Name' );
+		$response->assertSeeText ( 'Edit' );
+	}
+
+	/**
+	 * Create view
+	 *
+	 * @return void
+	 */
+	public function test_games_create() {
+		$this->be ( $this->user );
+		$response = $this->get ( '/games/create' );
+		$response->assertStatus ( 200 );
+		$response->assertSeeText ( 'Add Games Data' );
+	}
+	
+	/**
+	 * Edit view
+	 *
+	 * @return void
+	 */
+	public function test_games_edit() {
+		$this->be ( $this->user );
+		
+		$initial_count = Game::count();
+		$this->assertTrue($initial_count == 0, "No element after refresh");
+		
+		// Create
+		$game = Game::factory()->make();
+		$game->save();
+		$count = Game::count();
+		$this->assertTrue($count == 1, "One element created");
+
+		# Read
+		$stored = Game::where('name', $game->name)->first();
+		$id = $stored->id;
+		
+		$response = $this->get ( "/games/$id/edit" );
+		$response->assertStatus ( 200 );
+		$response->assertSeeText ( 'Edit Game Data' );
+	}
+	
 }
