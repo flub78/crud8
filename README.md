@@ -1,8 +1,25 @@
 # CRUD8
 
-A CRUD using Laravel 8.x and PHP 8.
+Initialy a CRUD using Laravel 8.x and PHP 8.
 
-## Sources
+The project is evolving to include a basic infrastructure for a generic Web application. The idea is to first develop everything common to multiple Web applications and then to fork it and complete it with business logic. Once this project is available it should be extremely fast to derive real WEB application from it. 
+
+The infrastructure should support:
+
+* A basic CRUD example
+* Unit tests, Feature tests, browser controlled tests
+* Authentication and roles management
+* usage of datatable
+* CSV and pdf export
+* file attachment to database items
+* Calendar and email support
+* Datatable
+* API support for Android clients
+* Multi languages and localisation
+* Basic documentation for development, design, specification and user documentation
+
+
+## Sources and inspiration
 
 [Laravel 8 CRUD tutorial](https://appdividend.com/2020/10/13/laravel-8-crud-tutorial-example-step-by-step-from-scratch/)
     
@@ -22,6 +39,10 @@ check
 ### Edit the .env file to set database identifiers
 
 ### Create the MySql database and a matching user
+
+### Laravel application Architecture
+
+![alt text](doc/images/uml_architecture.png)
 
 ### Create the model
 
@@ -106,7 +127,7 @@ test with empty fields
 
 ### Unit tests
 
-### Selenium like tests
+### Browser control tests
 
 ## Documentation
 
