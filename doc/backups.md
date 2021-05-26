@@ -2,6 +2,8 @@
 
 Even if it can be managed outside of the application, it can be convenient for admin users to be able trigger a backup and  to restore it from the application.
 
+https://www.codecheef.org/article/laravel-7-daily-monthly-weekly-automatic-database-backup-tutorial
+
 ## Use cases
 * Immediate backup of the current state (download the backup)
 * Automatic backup (periodic)
