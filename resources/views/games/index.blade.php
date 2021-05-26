@@ -14,15 +14,17 @@
       {{ session()->get('success') }}  
     </div><br />
   @endif
-  <table class="table table-striped">
+  <table class="table table-striped"  id="maintable">
     <thead>
         <tr>
           <td>ID</td>
           <td>Game Name</td>
           <td>Game Price</td>
-          <td colspan="2">Action</td>
+          <td >Edit</td>
+          <td >Delete</td>
         </tr>
     </thead>
+    
     <tbody>
         @foreach($games as $game)
         <tr>
@@ -45,4 +47,12 @@
     <a href="{{url('games')}}/create"><button type="submit" class="btn btn-primary" >@lang('general.create') @lang('games.element')</button></a> 
   
 <div>
+
+	<script type="text/javascript">
+	<!--
+	$(document).ready( function () {
+	    $('#maintable').DataTable();
+	} );
+	//-->
+	</script>
 @endsection

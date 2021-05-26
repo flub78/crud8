@@ -151,6 +151,7 @@ Views are generated using the blade templating.
 
 One view directory for every controller.
 
+welcome : the Laravel default application home page
 home : home view when the user is logged in
 
 ### Add Validation rules and store the data.
