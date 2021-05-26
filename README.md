@@ -67,23 +67,53 @@ in routes\web.php
 
 and check it
 
-    php artisan route:list
-    
+  
     >php artisan route:list
-    +--------+-----------+-------------------+---------------+---------------------------------------------+------------+
-    | Domain | Method    | URI               | Name          | Action                                      | Middleware |
-    +--------+-----------+-------------------+---------------+---------------------------------------------+------------+
-    |        | GET|HEAD  | /                 |               | Closure                                     | web        |
-    |        | GET|HEAD  | api/user          |               | Closure                                     | api        |
-    |        |           |                   |               |                                             | auth:api   |
-    |        | GET|HEAD  | games             | games.index   | App\Http\Controllers\GameController@index   | web        |
-    |        | POST      | games             | games.store   | App\Http\Controllers\GameController@store   | web        |
-    |        | GET|HEAD  | games/create      | games.create  | App\Http\Controllers\GameController@create  | web        |
-    |        | GET|HEAD  | games/{game}      | games.show    | App\Http\Controllers\GameController@show    | web        |
-    |        | PUT|PATCH | games/{game}      | games.update  | App\Http\Controllers\GameController@update  | web        |
-    |        | DELETE    | games/{game}      | games.destroy | App\Http\Controllers\GameController@destroy | web        |
-    |        | GET|HEAD  | games/{game}/edit | games.edit    | App\Http\Controllers\GameController@edit    | web        |
-    +--------+-----------+-------------------+---------------+---------------------------------------------+------------+
+    C:\Users\frederic\Dropbox\xampp\htdocs\crud8>php artisan route:list
+    +--------+-----------+-------------------------------+------------------+------------------------------------------------------------------------+------------+
+    | Domain | Method    | URI                           | Name             | Action                                                                 | Middleware |
+    +--------+-----------+-------------------------------+------------------+------------------------------------------------------------------------+------------+
+    |        | GET|HEAD  | /                             |                  | Closure                                                                | web        |
+    |        | GET|HEAD  | _dusk/login/{userId}/{guard?} | dusk.login       | Laravel\Dusk\Http\Controllers\UserController@login                     | web        |
+    |        | GET|HEAD  | _dusk/logout/{guard?}         | dusk.logout      | Laravel\Dusk\Http\Controllers\UserController@logout                    | web        |
+    |        | GET|HEAD  | _dusk/user/{guard?}           | dusk.user        | Laravel\Dusk\Http\Controllers\UserController@user                      | web        |
+    |        | GET|HEAD  | api/user                      |                  | Closure                                                                | api        |
+    |        |           |                               |                  |                                                                        | auth:api   |
+    |        | GET|HEAD  | games                         | games.index      | App\Http\Controllers\GameController@index                              | web        |
+    |        |           |                               |                  |                                                                        | auth       |
+    |        | POST      | games                         | games.store      | App\Http\Controllers\GameController@store                              | web        |
+    |        |           |                               |                  |                                                                        | auth       |
+    |        | GET|HEAD  | games/create                  | games.create     | App\Http\Controllers\GameController@create                             | web        |
+    |        |           |                               |                  |                                                                        | auth       |
+    |        | GET|HEAD  | games/{game}                  | games.show       | App\Http\Controllers\GameController@show                               | web        |
+    |        |           |                               |                  |                                                                        | auth       |
+    |        | PUT|PATCH | games/{game}                  | games.update     | App\Http\Controllers\GameController@update                             | web        |
+    |        |           |                               |                  |                                                                        | auth       |
+    |        | DELETE    | games/{game}                  | games.destroy    | App\Http\Controllers\GameController@destroy                            | web        |
+    |        |           |                               |                  |                                                                        | auth       |
+    |        | GET|HEAD  | games/{game}/edit             | games.edit       | App\Http\Controllers\GameController@edit                               | web        |
+    |        |           |                               |                  |                                                                        | auth       |
+    |        | GET|HEAD  | home                          | home             | App\Http\Controllers\HomeController@index                              | web        |
+    |        |           |                               |                  |                                                                        | auth       |
+    |        | GET|HEAD  | login                         | login            | App\Http\Controllers\Auth\LoginController@showLoginForm                | web        |
+    |        |           |                               |                  |                                                                        | guest      |
+    |        | POST      | login                         |                  | App\Http\Controllers\Auth\LoginController@login                        | web        |
+    |        |           |                               |                  |                                                                        | guest      |
+    |        | POST      | logout                        | logout           | App\Http\Controllers\Auth\LoginController@logout                       | web        |
+    |        | GET|HEAD  | password/confirm              | password.confirm | App\Http\Controllers\Auth\ConfirmPasswordController@showConfirmForm    | web        |
+    |        |           |                               |                  |                                                                        | auth       |
+    |        | POST      | password/confirm              |                  | App\Http\Controllers\Auth\ConfirmPasswordController@confirm            | web        |
+    |        |           |                               |                  |                                                                        | auth       |
+    |        | POST      | password/email                | password.email   | App\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail  | web        |
+    |        | GET|HEAD  | password/reset                | password.request | App\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm | web        |
+    |        | POST      | password/reset                | password.update  | App\Http\Controllers\Auth\ResetPasswordController@reset                | web        |
+    |        | GET|HEAD  | password/reset/{token}        | password.reset   | App\Http\Controllers\Auth\ResetPasswordController@showResetForm        | web        |
+    |        | GET|HEAD  | register                      | register         | App\Http\Controllers\Auth\RegisterController@showRegistrationForm      | web        |
+    |        |           |                               |                  |                                                                        | guest      |
+    |        | POST      | register                      |                  | App\Http\Controllers\Auth\RegisterController@register                  | web        |
+    |        |           |                               |                  |                                                                        | guest      |
+    +--------+-----------+-------------------------------+------------------+------------------------------------------------------------------------+------------+
+
     
 ### Configure bootstrap
 
@@ -116,6 +146,12 @@ to fix:
     npm run dev
 
 ### Create Views in Laravel 8
+
+Views are generated using the blade templating.
+
+One view directory for every controller.
+
+home : home view when the user is logged in
 
 ### Add Validation rules and store the data.
 
