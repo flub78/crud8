@@ -101,4 +101,70 @@ class GameControllerTest extends TestCase {
 		$response->assertStatus ( 404 );	// not found		
 	}
 		
+	/**
+	 * Test element storage
+	 */
+	public function test_games_store() {
+		
+		// to avoid the error: 419 = Authentication timeout
+		$this->withoutMiddleware();
+				
+		$initial_count = Game::count();
+		
+		$elt = array('name' => 'go', 'price' => 12);
+		$response = $this->post('/games', $elt);
+		
+		if (session('errors')) {
+			$this->assertTrue(session('errors'), "session has no errors");
+		}
+		
+		$count = Game::count();
+		$this->assertTrue($count == $initial_count + 1, "One new elements in the table");
+	}
+
+	/**
+	 * Test element storage
+	 */
+	public function test_games_store_incorrect_element() {
+		
+		// to avoid the error: 419 = Authentication timeout
+		$this->withoutMiddleware();
+		
+		$initial_count = Game::count();
+		
+		$elt = array('name' => 'go', 'price' => 300);
+		$response = $this->post('/games', $elt);
+		
+		if (!session('errors')) {
+			$this->assertTrue(session('errors'), "session has errors");
+		}
+		
+		$count = Game::count();
+		$this->assertTrue($count == $initial_count, "No creation in the table");
+	}
+	
+	/**
+	 * 
+	 */
+	public function test_games_update_and_delete() {
+		$this->test_games_store();
+		
+		$initial_count = Game::count();
+		
+		$stored = Game::where('name', 'go')->first();
+		$this->assertEquals( $stored->price, 12, "check retrieve value");
+		$elt = array('name' => $stored->name, 'price' => $stored->price * 2, 'id' => $stored->id);
+		
+		$url = "/games/" . $stored->id;
+		$response = $this->patch($url, $elt);
+		$stored = Game::where('name', 'go')->first();
+		$this->assertEquals( $stored->price, 24, "value updated");
+		
+		$this->delete("/gamess/" . $stored->id);
+		$count = Game::count();
+		$this->assertTrue($count == $initial_count, "Element created then deleted");
+		
+	}
+	
+	
 }

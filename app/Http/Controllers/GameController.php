@@ -43,7 +43,7 @@ class GameController extends Controller
         // Curently price is an integer value ...
         $validatedData = $request->validate([
             'name' => 'required|max:255',
-            'price' => 'required',
+            'price' => 'required|integer|max:255',
         ]);
         $show = Game::create($validatedData);
         

@@ -63,4 +63,20 @@ class GamesModelTest extends TestCase
         ]);
     }
     
+    public function test_saving_incorrect_values() {
+    	// Create
+    	$game = Game::factory()->make();
+    	$game->price = 300;
+    	$game->save();
+    	
+    	
+    }
+    
+    public function test_updating_with_incorrect_input () {
+    	
+    }
+    
+    public function test_deleting_non_existing_element () {
+    	
+    }
 }
