@@ -1,16 +1,41 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
+            
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" 
+                 aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
+                    
                     <ul class="navbar-nav mr-auto">
-
+						
+    					<li class="nav-item">
+      						<a class="nav-link" href="{{ route('home') }}">Home</a>
+    					</li>
+    				
+    					<li class="nav-item dropdown">
+      						<a class="nav-link dropdown-toggle" href="#" id="navbardrop1" data-toggle="dropdown">Admin</a>
+      						
+      						<div class="dropdown-menu">
+        						<a class="dropdown-item" href="#">Users</a>
+        						<a class="dropdown-item" href="#">Backup</a>
+      						</div>
+    					</li>
+    					
+    					<li class="nav-item dropdown">
+      						<a class="nav-link dropdown-toggle" href="#" id="navbardrop2" data-toggle="dropdown">Games</a>
+      						
+      						<div class="dropdown-menu">
+        						<a class="dropdown-item" href="{{ route('games.index') }}">List</a>
+        						<a class="dropdown-item" href="{{ route('games.create') }}">New Game</a>
+      						</div>
+    					</li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
