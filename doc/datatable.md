@@ -26,3 +26,8 @@ and add the following in templates that use datatable (index.blade.php)
     //-->
     </script>
 
+## Installation
+
+The easiest way is to select desired datatable features from the following page and then to copy and past the cdn links into the header blade template.
+
+    https://datatables.net/download/

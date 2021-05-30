@@ -12,6 +12,7 @@
     </div><br />
   @endif
   <table class="table table-striped"  id="maintable">
+    <caption>Our game selection</caption>
     <thead>
         <tr>
           <td>ID</td>
