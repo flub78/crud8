@@ -55,4 +55,8 @@
 	} );
 	//-->
 	</script>
+
+</div>
 @endsection
+
+
