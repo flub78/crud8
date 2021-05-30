@@ -3,11 +3,8 @@
 @extends('layouts.app')
 
 @section('content')
-<style>
-  .uper {
-    margin-top: 40px;
-  }
-</style>
+
+
 <div class="uper">
   @if(session()->get('success'))
     <div class="alert alert-success">
@@ -45,18 +42,7 @@
   </table>
   
     <a href="{{url('games')}}/create"><button type="submit" class="btn btn-primary" >@lang('general.create') @lang('games.element')</button></a> 
-  
-<div>
-
-	<script type="text/javascript">
-	<!--
-	$(document).ready( function () {
-	    $('#maintable').DataTable();
-	} );
-	//-->
-	</script>
-
-</div>
+</div>  
 @endsection
 
 
