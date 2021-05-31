@@ -30,3 +30,52 @@ A backup is stored on the werver and can be downloaded.
 * Wait until completion
 
 --------------------------------------------------------------------------------
+# Implementation
+
+## The artisan command
+
+    php artisan make:command BackupCreate
+    php artisan make:command BackupDelete
+
+## Usage
+
+    php artisan backup:create
+    php artisan backup:list
+    php artisan backup:delete 2
+    php artisan backup:delete backup-2021-05-26_075112.gz
+    php artisan backup:restore 3
+    php artisan backup:restore backup-2021-05-26_075112.gz
+
+## The backup controller
+
+* backup.index          list locally stored backups
+* backup.create         create a new backup by calling the artisan command
+* backup.delete (n)     delete a local backup
+* backup.restore (n)    restore a local backup
+
+## S3 storage
+
+not implemented yet but it could be interresting to support AWS S3 cloud storage (or others)
+
+options to specify the storage:
+* -local (default)
+* -s3, AWS S3 storage
+
+    php artisan backup:create -s3
+    php artisan backup:list -local
+    php artisan backup:delete 2 -s3
+    php artisan backup:delete -s3 backup-2021-05-26_075112.gz
+    php artisan backup:restore -local 3
+    php artisan backup:restore -s3 backup-2021-05-26_075112.gz
+    
+    php artisan backup:copy local:backup-2021-05-26_075112.gz s3:
+    php artisan backup:copy local:backup-2021-05-26_075112.gz s3:
+    php artisan backup:copy backup-2021-05-26_075112.gz backup_tp_keep.gz
+    
+## Restore backups
+
+### Unzip
+
+    https://shouts.dev/how-to-create-extract-zip-and-delete-files-or-folders-from-zip-in-laravel
+    
+    
