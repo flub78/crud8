@@ -26,6 +26,8 @@ Route::get('/', function () {
 });
 
 Route::resource('games', 'GameController')->middleware('auth');
+Route::resource('backup', 'BackupController')->middleware('auth');
+
 
 Auth::routes(['reset' => true]);
 

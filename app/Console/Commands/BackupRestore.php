@@ -12,7 +12,7 @@ class BackupRestore extends Command
      *
      * @var string
      */
-    protected $signature = 'backup:restore {backup_id}';
+    protected $signature = 'backup:restore {--force} {backup_id}';
 
     /**
      * The console command description.
@@ -61,7 +61,7 @@ class BackupRestore extends Command
     	// The backup exists
     	$filename = storage_path() . "/app/backup/" . $selected_file;
     	
-    	if ($this->confirm('Are you sure you want to restore ' . $selected_file . ' ?')) {
+    	if ( $this->option('force') || $this->confirm('Are you sure you want to restore ' . $selected_file . ' ?')) {
     		
     		$mysql = 'c:\xampp\mysql\bin\mysql.exe';
     		    		
