@@ -64,27 +64,7 @@ class BackupController extends Controller
         return $this->index();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -92,29 +72,19 @@ class BackupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function restore($id)
     {
         $filename = $this->filename_from_index($id);
         
         if ($filename) {
         	echo "restoring $filename";
         	Artisan::call('backup:restore', ['backup_id' => $filename, '--force' => true]);
+        	return redirect('/backup')->with('success', 'Backup ' . $filename . " restored");
         }
-        
-        return $this->index();
+
+        return redirect('/backup')->with('error', "backup " . $id . " not found");
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -124,12 +94,13 @@ class BackupController extends Controller
      */
     public function destroy($id)
     {
-    	$filename = $this->filename_from_index($id);
+    	$filename = $this->filename_from_index($id, true);
+    	$short_filename = $this->filename_from_index($id);
     	
     	if ($filename) {
     		unlink($filename);
+    		return redirect('/backup')->with('success', 'Backup ' . $short_filename . " deleted");
     	}
-    	
-    	return $this->index();
+    	return redirect('/backup')->with('error', "Backup " . $id . " not found");    	
     }
 }
