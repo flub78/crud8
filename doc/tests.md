@@ -9,10 +9,12 @@ Tests need to be develop at the same pace than the code. It is usualy a huge eff
   * We use them for models and controllers
   * coverage is measured in covered line of code
   * white box testing
+  * they refresh the database before execution
   
 * Feature tests
   * they check the capacity of several classes to implement a feature
   * grey box testing
+  * They may start execution with the restoration of a test database
   
 * End to End tests
   * mostly black box testing

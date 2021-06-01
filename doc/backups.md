@@ -1,6 +1,6 @@
 # Database backup and restore
 
-Even if it can be managed outside of the application, it can be convenient for admin users to be able trigger a backup and  to restore it from the application.
+Even if it can be managed outside of the application, it can be convenient for admin users to trigger and restore backup from the application.
 
 https://www.codecheef.org/article/laravel-7-daily-monthly-weekly-automatic-database-backup-tutorial
 
@@ -32,7 +32,7 @@ A backup is stored on the werver and can be downloaded.
 --------------------------------------------------------------------------------
 # Implementation
 
-## The artisan command
+## Creating artisan commands
 
     php artisan make:command BackupCreate
     php artisan make:command BackupDelete
@@ -50,7 +50,7 @@ A backup is stored on the werver and can be downloaded.
 
 * backup.index          list locally stored backups
 * backup.create         create a new backup by calling the artisan command
-* backup.delete (n)     delete a local backup
+* backup.destroy (n)    delete a local backup
 * backup.restore (n)    restore a local backup
 
 ## S3 storage
@@ -76,6 +76,27 @@ options to specify the storage:
 
 ### Unzip
 
-    https://shouts.dev/how-to-create-extract-zip-and-delete-files-or-folders-from-zip-in-laravel
+gzip is used to compress and uncompress backups. It must be available
+in the path.
     
-    
+# Testing
+
+As the controller reuse the artisan command implementation the test can be done at the controller level
+
+Test cases:
+
+Nominal:
+* get a signature/hash of the database
+* backup current database state (check that a new backup is created)
+* change the database
+* restore the previous state
+* check that the database is back in its initial state
+* delete the backup
+* check that there is one less backup in the local storage
+
+Error test case:
+* delete a non existing backup
+* restore a non existing backup
+
+* attempt to create, restore or delete a backup as non admin
+
