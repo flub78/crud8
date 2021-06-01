@@ -7,7 +7,7 @@
 	$(document).ready( function () {
 	    $('#maintable').DataTable({
 	    paging:true,
-	     dom: 'Bfrtip',
+	     dom: 'Blfrtip',
 		    buttons: [
 		        'csv',
 		        'print',
