@@ -160,9 +160,10 @@ class GameControllerTest extends TestCase {
 		$stored = Game::where('name', 'go')->first();
 		$this->assertEquals( $stored->price, 24, "value updated");
 		
-		$this->delete("/gamess/" . $stored->id);
+		$url = "/games/" . $stored->id;
+		$this->delete($url);
 		$count = Game::count();
-		$this->assertTrue($count == $initial_count, "Element created then deleted");
+		$this->assertTrue($count == $initial_count - 1, "Element updated then deleted ($url)"); 
 		
 	}
 	

@@ -11,7 +11,7 @@ class BackupDelete extends Command
      *
      * @var string
      */
-    protected $signature = 'backup:delete {backup_id}';
+    protected $signature = 'backup:delete {--force} {backup_id}';
 
     /**
      * The console command description.
@@ -58,7 +58,7 @@ class BackupDelete extends Command
     	}
     	
     	// The backup exists
-    	if ($this->confirm('Delete ' . $selected_file . '?')) {
+    	if ($this->option('force') || $this->confirm('Delete ' . $selected_file . '?')) {
     		$filename = storage_path() . "/app/backup/" . $selected_file;
     		unlink($filename);
     		

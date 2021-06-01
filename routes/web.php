@@ -26,6 +26,7 @@ Route::get('/', function () {
 });
 
 Route::resource('games', 'GameController')->middleware('auth');
+Route::resource('users', 'UserController')->middleware('auth');
 
 // Backup controller is not a full resource
 Route::get('/backup', [App\Http\Controllers\BackupController::class, 'index'])->name('backup.index')->middleware('auth');

@@ -9,7 +9,7 @@
  * delete a non existing backup
  * restore a non existing backup
  *
- * attempt to create, restore or delete a backup as non admin
+ * attempt to create, restore or delete a backup using the artisan commandes
  */
 namespace tests\Feature;
 
@@ -17,9 +17,9 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Game;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Artisan;
 
-class BackupControllerTest extends TestCase {
-	protected $basename = "games";
+class BackupArtisanTest extends TestCase {
 
 	// Clean up the database
 	// Not refreshing the database may break others tests
@@ -87,27 +87,21 @@ class BackupControllerTest extends TestCase {
 		$initial_count = $this->local_backup_count ();
 		
 		// backup list
-		$response = $this->get ( '/backup' );
-		$response->assertStatus ( 200 );
-		$response->assertSeeText('Local backups');
-		$response->assertSeeText('Number');
-		$response->assertSeeText('Restore');
-		$response->assertSeeText('New backup');
+		$exitCode = Artisan::call('backup:list');
+		$this->assertEquals($exitCode, 0, "No error on backup:list");
 		
 		// create a backup
-		$response = $this->get ( '/backup/create' );
-		$response->assertStatus ( 200 );
-
+		$exitCode = Artisan::call('backup:create', []);
+		$this->assertEquals($exitCode, 0, "No error on backup:create");
+		
 		$this->assertEquals ( $this->local_backup_count (), $initial_count + 1, "a backup has been created" );
 
 		$id = $initial_count + 1;
-
-		echo "   warning: restore is not tested\n";
 		
 		/*
 		 * It seems that restoring a database while phpunit is running has some negative effects...
 		 * It blocks the test ....
-		 * 
+		
 		// Change the database
 		$initial_table_count = Game::count ();
 		$game = Game::factory ()->make ();
@@ -116,17 +110,16 @@ class BackupControllerTest extends TestCase {
 		$this->assertEquals ( $count, $initial_table_count + 1, "One element created" );
 
 		// Restore the database
-		$response = $this->get ( "/backup/$id/restore" );
-		$response->assertStatus ( 302 ); // redirected
-
+		$exitCode = Artisan::call("backup:restore --force $id");
+		$this->assertEquals($exitCode, 0, "No error on backup:restore");
+		
 		// Check rollback
 		$this->assertEquals ( Game::count (), $initial_table_count, "Back to initial state" );
 		*/
 
 		// Delete the backup
-		$response = $this->delete ( "/backup/$id" );
-		$response->assertStatus ( 302 ); // redirected
-		// $response->assertSeeText ( 'deleted' );
+		$exitCode = Artisan::call("backup:delete --force $id");
+		$this->assertEquals($exitCode, 0, "No error on backup:delete");
 		
 		$this->assertEquals ( $this->local_backup_count (), $initial_count, "a backup has been deleted" );
 	}
@@ -136,24 +129,15 @@ class BackupControllerTest extends TestCase {
 	 * 
 	 */
 	public function test_delete_non_existing_backup() {
-		$this->be ( $this->user );
-
-		$response = $this->delete ( "/backup/999999999" );
-		$response->assertStatus ( 302 ); // redirected
-		
-		// echo "   warning: no reported error is checked\n";
-		
+		$exitCode = Artisan::call("backup:delete --force 999999999");
+		$this->assertEquals($exitCode, 1, "Error on backup:delete");		
 	}
 	
 	/**
 	 *
 	 */
 	public function test_restore_non_existing_backup() {
-		$this->be ( $this->user );
-		
-		$response = $this->get ( "/backup/999999999/restore" );
-		$response->assertStatus ( 302 ); // redirected
-
-		// echo "   warning: no reported error is checked\n";
+		$exitCode = Artisan::call("backup:restore --force 999999999");
+		$this->assertEquals($exitCode, 1, "Error on backup:restore");
 	}
 }

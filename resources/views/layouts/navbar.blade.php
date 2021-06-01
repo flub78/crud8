@@ -23,7 +23,7 @@
       						<a class="nav-link dropdown-toggle" href="#" id="navbardrop1" data-toggle="dropdown">Admin</a>
       						
       						<div class="dropdown-menu">
-        						<a class="dropdown-item" href="#">Users</a>
+        						<a class="dropdown-item" href="{{ route('users.index') }}">Users</a>
         						<a class="dropdown-item" href="{{ route('backup.index') }}">Backup</a>
       						</div>
     					</li>

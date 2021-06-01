@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Game;
+use App\Models\User;
 use Illuminate\Support\Facades\Log;
 
 
-class GameController extends Controller
+class UserController extends Controller
 {
     /**
      * Display the resource table view
@@ -16,9 +16,9 @@ class GameController extends Controller
      */
     public function index()
     {        
-        $games = Game::all();
+        $users = User::all();
         
-        return view('games/index',compact('games'));
+        return view('users/index',compact('users'));
     }
 
     /**
@@ -28,11 +28,11 @@ class GameController extends Controller
      */
     public function create()
     {        
-        return view('games/create');
+        return view('users/create');
     }
 
     /**
-     * Store a new resource in database
+     * Store a new resource in database.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -45,13 +45,13 @@ class GameController extends Controller
             'name' => 'required|max:255',
             'price' => 'required|integer|max:255',
         ]);
-        $show = Game::create($validatedData);
+        $show = User::create($validatedData);
         
-        return redirect('/games')->with('success', 'Game is successfully saved');
+        return redirect('/users')->with('success', 'User is successfully saved');
     }
 
     /**
-     * Display a resource.
+     * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -68,9 +68,9 @@ class GameController extends Controller
      */
     public function edit($id)
     {
-        $game = Game::findOrFail($id);
+        $user = User::findOrFail($id);
         
-        return view('games/edit', compact('game'));
+        return view('users/edit', compact('user'));
     }
 
     /**
@@ -86,9 +86,9 @@ class GameController extends Controller
             'name' => 'required|max:255',
             'price' => 'required'
         ]);
-        Game::whereId($id)->update($validatedData);
+        User::whereId($id)->update($validatedData);
         
-        return redirect('/games')->with('success', 'Game Data is successfully updated');
+        return redirect('/users')->with('success', 'User Data is successfully updated');
     }
 
     /**
@@ -99,9 +99,9 @@ class GameController extends Controller
      */
     public function destroy($id)
     {     
-        $game = Game::findOrFail($id);
-        $game->delete();
+        $user = User::findOrFail($id);
+        $user->delete();
         
-        return redirect('/games')->with('success', 'Game Data is successfully deleted');
+        return redirect('/users')->with('success', 'User is successfully deleted');
     }
 }

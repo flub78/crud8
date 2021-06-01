@@ -4,48 +4,43 @@ Tests need to be develop at the same pace than the code. It is usualy a huge eff
 
 ## Type of test
 
-* unit tests
+### unit tests
   * they check the class public method both for nominal inputs and erroneous input
   * We use them for models and controllers
   * coverage is measured in covered line of code
   * white box testing
   * they refresh the database before execution
   
-* Feature tests
+### Feature tests
   * they check the capacity of several classes to implement a feature
   * grey box testing
   * They may start execution with the restoration of a test database
   
-* End to End tests
+### End to End tests
   * mostly black box testing
   * For WEB application us a controlled WEB browser
   * May require the control of all of the system interfaces
   
-* Performance tests
+### Performance tests
 
-* Endurance tests
+### Endurance tests
 
-* Deployment tests
+### Deployment tests
 
+# Test Coverage
 
-## Current features
+It is possible to measure test coverage while running phpunit tests. See coverage.bat
 
-* A CRUD to manage games
-* some authentication mechanism
+## Initial coverage measure of the project
+![First coverage measure of the project](images/initial_coverage.png) 
 
-Unit tests check all the public class method
+## Initial coverage dashboard
+![alt text](images/coverage_dashboard.png) 
 
-Games CRUD required tests
-    * model test
-        * create test case
-        * read test case
-        * update test case
-        * delete test case
-    * controller test case
-    * WEB browser test cases
-    
+## Current status
 
-## Testing model
+[Project test coverage](coverage/index.html)
+## How to test a model
 
 Create a factory
 
