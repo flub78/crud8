@@ -54,13 +54,11 @@ class UserControllerTest extends TestCase {
 	 * @return void
 	 */
 	public function test_users_index_view() {
-		
-		$this->markTestSkipped('must be revisited.');
-		
+				
 		$this->be ( $this->user );
 		$response = $this->get ( '/users' );
 		$response->assertStatus ( 200 );
-		$response->assertSeeText ( 'User Name' );
+		$response->assertSeeText ( 'Users' );
 		$response->assertSeeText ( 'Edit' );
 	}
 
@@ -106,17 +104,14 @@ class UserControllerTest extends TestCase {
 	/**
 	 * Test element storage
 	 */
-	public function test_users_store() {
-		
-		$this->markTestSkipped('must be revisited.');
-		
+	public function test_users_store() {		
 		
 		// to avoid the error: 419 = Authentication timeout
 		$this->withoutMiddleware();
 				
 		$initial_count = User::count();
 		
-		$elt = array('name' => 'go', 'price' => 12);
+		$elt = array('name' => 'Turlututu', 'email' => 'turlututu@free.fr', 'password' => 'password', 'password_confirmation' => 'password');
 		$response = $this->post('/users', $elt);
 		
 		if (session('errors')) {
@@ -137,8 +132,9 @@ class UserControllerTest extends TestCase {
 		
 		$initial_count = User::count();
 		
-		$elt = array('name' => 'go', 'price' => 300);
+		$elt = array('name' => 'Turlututu', 'email' => 'go.email');
 		$response = $this->post('/users', $elt);
+		$response->assertStatus ( 302);
 		
 		if (!session('errors')) {
 			$this->assertTrue(session('errors'), "session has errors");
@@ -156,20 +152,25 @@ class UserControllerTest extends TestCase {
 		
 		$initial_count = User::count();
 		
-		$stored = User::where('name', 'go')->first();
-		$this->assertEquals( $stored->price, 12, "check retrieve value");
-		$elt = array('name' => $stored->name, 'price' => $stored->price * 2, 'id' => $stored->id);
+		$stored = User::where('name', 'Turlututu')->first();
+		$this->assertEquals( $stored->email, 'turlututu@free.fr', "check retrieve value");
+		$new_email = 'new.email@free.fr';
+		$elt = array('name' => $stored->name, 'email' => $new_email, 'id' => $stored->id, 'password' => 'password', 'password_confirmation' => 'password');
 		
 		$url = "/users/" . $stored->id;
 		$response = $this->patch($url, $elt);
-		$stored = User::where('name', 'go')->first();
-		$this->assertEquals( $stored->price, 24, "value updated");
+		
+		$response->assertStatus (302);
+		
+		$this->assertNull(session('errors'), "session has no errors");
+		
+		$stored = User::where('name', 'Turlututu')->first();
+		$this->assertEquals( $stored->email, $new_email, "value updated");
 		
 		$url = "/users/" . $stored->id;
 		$this->delete($url);
 		$count = User::count();
 		$this->assertTrue($count == $initial_count - 1, "Element updated then deleted ($url)"); 
-		
 	}
 	
 	

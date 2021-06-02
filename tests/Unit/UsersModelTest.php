@@ -19,9 +19,7 @@ class UsersModelTest extends TestCase
      * Then it is stored in database, it can be read, updated and deleted
      */
     public function testCRUD () {
-    	
-    	$this->markTestSkipped('must be revisited.');
-        
+    	        
         $initial_count = User::count();
         
         // Create
@@ -50,6 +48,7 @@ class UsersModelTest extends TestCase
         
         $back = User::where('name', $new_name)->first();
         $this->assertEquals($back->email, $new_email, "After update");
+        $this->assertTrue($back->isAdmin(), "Admin by default");
         $this->assertDatabaseHas('users', [
             'name' => $new_name,
         ]);
@@ -64,18 +63,15 @@ class UsersModelTest extends TestCase
         ]);
     }
     
-    public function test_saving_incorrect_values() {
-    	// Create
-    	$user = User::factory()->make();
-    	$user->email = 'user_gmail.com';
-    	$user->save();
-    }
-    
-    public function test_updating_with_incorrect_input () {
-    	
-    }
     
     public function test_deleting_non_existing_element () {
+    	$initial_count = User::count();
     	
+    	$user = User::factory()->make();
+    	$user->id = 999999999;
+    	$user->delete();
+    	
+    	$count = User::count();
+    	$this->assertTrue($count == $initial_count, "No changes in database");
     }
 }
