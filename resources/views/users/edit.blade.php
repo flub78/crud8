@@ -38,6 +38,11 @@
               <label for="cases">Email</label>
               <input type="text" class="form-control" name="email" value="{{ old('email', $user->email) }}"/>
           </div>
+
+           <div class="form-group">
+              <label for="cases">Admin</label>
+              <input type="checkbox" class="form-control" name="admin" value="1"  {{old('admin', $user->admin) ? 'checked' : ''}}/>
+          </div>
           
           <div class="form-group">
               <label for="cases">Password</label>

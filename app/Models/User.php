@@ -19,7 +19,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password',
+        'password', 'admin'
     ];
 
     /**
@@ -42,7 +42,7 @@ class User extends Authenticatable
     ];
     
     public function isAdmin() {
-        return true;
+        return $this->admin;
     }
     
     public function equals(User $x) {

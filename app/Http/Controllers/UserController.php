@@ -5,7 +5,6 @@ namespace app\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller {
 	protected $create_rules = [ 
@@ -80,6 +79,11 @@ class UserController extends Controller {
 		$validatedData = $request->validate ( $this->create_rules );
 
 		$validatedData ['password'] = Hash::make ( $validatedData ['password'] );
+		if ($request->has('admin')) {
+			$validatedData['admin'] = true;
+		} else {
+			$validatedData['admin'] = false;
+		}
 		User::create ( $validatedData );
 
 		return redirect ( '/users' )->with ( 'success', 'User ' . $validatedData ['name'] . ' created' );
@@ -120,6 +124,11 @@ class UserController extends Controller {
 			// keep the same password
 			$user = User::findOrFail ( $id );
 			$validatedData ['password'] = $user->password;
+		}
+		if ($request->has('admin')) {
+			$validatedData['admin'] = true;
+		} else {
+			$validatedData['admin'] = false;
 		}
 		User::whereId ( $id )->update ( $validatedData );
 

@@ -17,6 +17,7 @@
         <tr>
           <td>Name</td>
           <td>Email</td>
+          <td>Admin</td>
           <td >Edit</td>
           <td >Delete</td>
         </tr>
@@ -27,7 +28,11 @@
         <tr>
             <td>{{$user->name}}</td>
             <td>{{$user->email}}</td>
+            <td>
+            	<input type="checkbox"   {{($user->admin) ? 'checked' : ''}} onclick="return false;" />
+            </td>
             <td><a href="{{ route('users.edit', $user->id)}}" class="btn btn-primary">Edit</a></td>
+            
             <td>
                 <form action="{{ route('users.destroy', $user->id)}}" method="post">
                   @csrf

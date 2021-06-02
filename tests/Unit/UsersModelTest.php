@@ -48,7 +48,7 @@ class UsersModelTest extends TestCase
         
         $back = User::where('name', $new_name)->first();
         $this->assertEquals($back->email, $new_email, "After update");
-        $this->assertTrue($back->isAdmin(), "Admin by default");
+        $this->assertEquals($back->isAdmin(), false, "Not admin by default");
         $this->assertDatabaseHas('users', [
             'name' => $new_name,
         ]);
