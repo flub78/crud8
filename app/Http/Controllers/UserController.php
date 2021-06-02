@@ -1,107 +1,144 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace app\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
+class UserController extends Controller {
+	protected $create_rules = [ 
+			'name' => [ 
+					'required',
+					'string',
+					'max:255'
+			],
+			'email' => [ 
+					'required',
+					'string',
+					'email',
+					'max:255',
+					'unique:users'
+			],
+			'password' => [ 
+					'required',
+					'string',
+					'min:8',
+					'confirmed'
+			]
+	];
+	protected $edit_rules = [ 
+			'name' => [ 
+					'required',
+					'string',
+					'max:255'
+			],
+			'email' => [ 
+					'required',
+					'string',
+					'email',
+					'max:255'
+			],
+			'password' => [ 
+					'nullable',
+					'string',
+					'min:8',
+					'confirmed'
+			]
+	];
 
-class UserController extends Controller
-{
-    /**
-     * Display the resource table view
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {        
-        $users = User::all();
-        
-        return view('users/index',compact('users'));
-    }
+	/**
+	 * Display the resource table view
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function index() {
+		$users = User::all ();
 
-    /**
-     * Show the form to create a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {        
-        return view('users/create');
-    }
+		return view ( 'users/index', compact ( 'users' ) );
+	}
 
-    /**
-     * Store a new resource in database.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {        
-        // TODO: handle price decimal values with comma (French localisation)
-        // Curently price is an integer value ...
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'price' => 'required|integer|max:255',
-        ]);
-        $show = User::create($validatedData);
-        
-        return redirect('/users')->with('success', 'User is successfully saved');
-    }
+	/**
+	 * Show the form to create a new resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function create() {
+		return view ( 'users/create' );
+	}
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-    public function show($id)
-    {
-    }
-     */
+	/**
+	 * Store a new resource in database.
+	 *
+	 * @param \Illuminate\Http\Request $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function store(Request $request) {
+		// TODO: handle price decimal values with comma (French localisation)
+		// Curently price is an integer value ...
+		$validatedData = $request->validate ( $this->create_rules );
 
-    /**
-     * Show the edit form
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $user = User::findOrFail($id);
-        
-        return view('users/edit', compact('user'));
-    }
+		$validatedData ['password'] = Hash::make ( $validatedData ['password'] );
+		User::create ( $validatedData );
 
-    /**
-     * Update the resource in database.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {        
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'price' => 'required'
-        ]);
-        User::whereId($id)->update($validatedData);
-        
-        return redirect('/users')->with('success', 'User Data is successfully updated');
-    }
+		return redirect ( '/users' )->with ( 'success', 'User ' . $validatedData ['name'] . ' created' );
+	}
 
-    /**
-     * Delete a resource from database.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {     
-        $user = User::findOrFail($id);
-        $user->delete();
-        
-        return redirect('/users')->with('success', 'User is successfully deleted');
-    }
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param int $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function show($id) {
+	}
+
+	/**
+	 * Show the edit form
+	 *
+	 * @param int $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function edit($id) {
+		$user = User::findOrFail ( $id );
+		return view ( 'users/edit' )->with ( compact ( 'user' ) );
+	}
+
+	/**
+	 * Update the resource in database.
+	 *
+	 * @param \Illuminate\Http\Request $request
+	 * @param int $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function update(Request $request, $id) {
+		$validatedData = $request->validate ( $this->edit_rules );
+		if ($validatedData ['password']) {
+			$validatedData ['password'] = Hash::make ( $validatedData ['password'] );
+		} else {
+			// keep the same password
+			$user = User::findOrFail ( $id );
+			$validatedData ['password'] = $user->password;
+		}
+		User::whereId ( $id )->update ( $validatedData );
+
+		$name = $validatedData ['name'];
+		return redirect ( '/users' )->with ( 'success', "User $name is updated" );
+	}
+
+	/**
+	 * Delete a resource from database.
+	 *
+	 * @param int $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function destroy($id) {
+		$user = User::findOrFail ( $id );
+		$name = $user->name;
+		$user->delete ();
+
+		return redirect ( '/users' )->with ( 'success', "User $name is deleted" );
+	}
+
 }

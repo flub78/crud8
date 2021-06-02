@@ -1,4 +1,4 @@
-<!-- create.blade.php -->
+<!-- Game create.blade.php -->
 
 @extends('layouts.app')
 
@@ -25,12 +25,12 @@
       <form method="post" action="{{ route('games.store') }}">
           <div class="form-group">
               @csrf
-              <label for="country_name">Game Name:</label>
-              <input type="text" class="form-control" name="name"/>
+              <label for="country_name">Game Name</label>
+              <input type="text" class="form-control" name="name"  value="{{ old('name') }}"/>
           </div>
           <div class="form-group">
-              <label for="cases">Price :</label>
-              <input type="text" class="form-control" name="price"/>
+              <label for="cases">Price</label>
+              <input type="text" class="form-control" name="price" value="{{ old('price') }}"/>
           </div>
           <button type="submit" class="btn btn-primary">Add Game</button>
       </form>

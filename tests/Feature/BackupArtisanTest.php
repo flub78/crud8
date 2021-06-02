@@ -23,7 +23,6 @@ class BackupArtisanTest extends TestCase {
 
 	// Clean up the database
 	// Not refreshing the database may break others tests
-	// TODO: as this test restore the database experiment without RefreshDatabase
 	use RefreshDatabase;
 
 	function __construct() {

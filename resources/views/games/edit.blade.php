@@ -24,11 +24,11 @@
           <div class="form-group">
               @csrf
               @method('PATCH')
-              <label for="country_name">Game Name:</label>
+              <label for="country_name">Game Name</label>
               <input type="text" class="form-control" name="name" value="{{ $game->name }}"/>
           </div>
           <div class="form-group">
-              <label for="cases">Game Price :</label>
+              <label for="cases">Game Price</label>
               <input type="text" class="form-control" name="price" value="{{ $game->price }}"/>
           </div>
           <button type="submit" class="btn btn-primary">Update Data</button>

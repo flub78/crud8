@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Log;
 
 class GameController extends Controller
 {
+	protected $rules = [
+			'name' => 'required|max:255',
+			'price' => 'required|integer|max:255|min:0',
+	];
+	
     /**
      * Display the resource table view
      *
@@ -41,10 +46,7 @@ class GameController extends Controller
     {        
         // TODO: handle price decimal values with comma (French localisation)
         // Curently price is an integer value ...
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'price' => 'required|integer|max:255',
-        ]);
+        $validatedData = $request->validate($this->rules);
         $show = Game::create($validatedData);
         
         return redirect('/games')->with('success', 'Game is successfully saved');
@@ -82,10 +84,7 @@ class GameController extends Controller
      */
     public function update(Request $request, $id)
     {        
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'price' => 'required'
-        ]);
+        $validatedData = $request->validate($this->rules);
         Game::whereId($id)->update($validatedData);
         
         return redirect('/games')->with('success', 'Game Data is successfully updated');

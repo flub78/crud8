@@ -1,14 +1,18 @@
+<!-- Users edit.blade.php -->
+
 @extends('layouts.app')
 
 @section('content')
+
 <style>
   .uper {
     margin-top: 40px;
   }
 </style>
+
 <div class="card uper">
   <div class="card-header">
-    Edit User
+    Edit user
   </div>
   <div class="card-body">
     @if ($errors->any())
@@ -20,18 +24,32 @@
         </ul>
       </div><br />
     @endif
+    
       <form method="post" action="{{ route('users.update', $user->id ) }}">
           <div class="form-group">
               @csrf
               @method('PATCH')
-              <label for="country_name">Game Name:</label>
-              <input type="text" class="form-control" name="name" value="{{ $user->name }}"/>
+              
+              <label for="country_name">Name</label>
+              <input type="text" class="form-control" name="name" value="{{ old('name', $user->name) }}"/>
           </div>
+          
           <div class="form-group">
-              <label for="cases">Game Price :</label>
-              <input type="text" class="form-control" name="email" value="{{ $user->email }}"/>
+              <label for="cases">Email</label>
+              <input type="text" class="form-control" name="email" value="{{ old('email', $user->email) }}"/>
           </div>
-          <button type="submit" class="btn btn-primary">Update Data</button>
+          
+          <div class="form-group">
+              <label for="cases">Password</label>
+              <input type="password" class="form-control" name="password" value="{{ old('password') }}"/>
+          </div>
+
+          <div class="form-group">
+              <label for="cases">Confirm Password</label>
+              <input type="password" class="form-control" name="password_confirmation" value="{{ old('password_confirmation') }}"/>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Edit User</button>
       </form>
   </div>
 </div>
