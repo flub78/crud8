@@ -37,5 +37,7 @@ Warning: Include the auth middleware in the routew/web.php file, rather that in 
 
 The easiest way to manage admin users is to add a field in the model.
 
+    
+
 ## Roles management
     

@@ -33,6 +33,7 @@ class BackupControllerTest extends TestCase {
 		$this->createApplication ();
 		// $this->user = factory(User::class)->create();
 		$this->user = User::factory ()->make ();
+		$this->user->admin = true;
 	}
 
 	function __destruct() {

@@ -19,7 +19,8 @@
     					<li class="nav-item">
       						<a class="nav-link" href="{{ route('home') }}">Home</a>
     					</li>
-    				
+
+@if (auth()->user()->isAdmin())    				
     					<li class="nav-item dropdown">
       						<a class="nav-link dropdown-toggle" href="#" id="navbardrop1" data-toggle="dropdown">Admin</a>
       						
@@ -28,7 +29,7 @@
         						<a class="dropdown-item" href="{{ route('backup.index') }}">Backup</a>
       						</div>
     					</li>
-    					
+@endif    					
     					<li class="nav-item dropdown">
       						<a class="nav-link dropdown-toggle" href="#" id="navbardrop2" data-toggle="dropdown">Games</a>
       						
