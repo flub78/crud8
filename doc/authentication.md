@@ -10,7 +10,7 @@ Most WEB application need a user management.
 I tried the breeze started kit, but it uses Tailwind instead of Bootstrap.
 So I'll revert to Laravel UI to keep things simple.
 
-Just keep track of the breeze installation procedure
+Just to keep track of the breeze installation procedure
 
     composer require laravel/breeze --dev
     php artisan breeze:install
@@ -37,7 +37,7 @@ Warning: Include the auth middleware in the routew/web.php file, rather that in 
 
 The easiest way to manage admin users is to add a field in the model.
 
-    
-
 ## Roles management
+
+Later
     

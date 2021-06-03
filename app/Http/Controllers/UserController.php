@@ -84,9 +84,10 @@ class UserController extends Controller {
 		} else {
 			$validatedData['admin'] = false;
 		}
+		$validatedData['active'] = ($request->has('active'));
 		User::create ( $validatedData );
 
-		return redirect ( '/users' )->with ( 'success', 'User ' . $validatedData ['name'] . ' created' );
+		return redirect ( '/users' )->with ( 'success', 'User ' . $validatedData ['name'] . ' has been created' );
 	}
 
 	/**
@@ -130,10 +131,11 @@ class UserController extends Controller {
 		} else {
 			$validatedData['admin'] = false;
 		}
+		$validatedData['active'] = ($request->has('active'));
 		User::whereId ( $id )->update ( $validatedData );
 
 		$name = $validatedData ['name'];
-		return redirect ( '/users' )->with ( 'success', "User $name is updated" );
+		return redirect ( '/users' )->with ( 'success', "User $name has been updated" );
 	}
 
 	/**
@@ -147,7 +149,7 @@ class UserController extends Controller {
 		$name = $user->name;
 		$user->delete ();
 
-		return redirect ( '/users' )->with ( 'success', "User $name is deleted" );
+		return redirect ( '/users' )->with ( 'success', "User $name has been deleted" );
 	}
 
 }

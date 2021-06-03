@@ -44,6 +44,11 @@
               <input type="checkbox" class="form-control" name="admin" value="1"  {{old('admin', $user->admin) ? 'checked' : ''}}/>
           </div>
           
+           <div class="form-group">
+              <label for="cases">Active</label>
+              <input type="checkbox" class="form-control" name="active" value="1"  {{old('active', $user->active) ? 'checked' : ''}}/>
+          </div>
+          
           <div class="form-group">
               <label for="cases">Password</label>
               <input type="password" class="form-control" name="password" value="{{ old('password') }}"/>
