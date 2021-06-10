@@ -75,6 +75,10 @@ class BackupRestore extends Command
     		
     		exec($command, $output, $returnVar);
     		
+    		if ($returnVar) {
+    			echo "MySQL error code= = $returnVar\n";
+    			return $returnVar;
+    		}
     		echo 'backup ' . $selected_file . " restored";	
      		
     	} else {
